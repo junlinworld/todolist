@@ -1,18 +1,48 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    
+    <entryData @submitData="handleReceiverData"/>
+    <!-- <span>{{doingList}}</span> -->
+    <doing :entryMsg = doingList @sendBackDoneList = "handleDoneList"/>
+    <done :doneMsg = doneList :doingList=doingList />
+    
   </div>
 </template>
 
 <script>
 import HelloWorld from './components/HelloWorld.vue'
+import entryData from './components/entryData.vue'
+import doing from './components/doing.vue'
+import done from './components/done.vue'
 
 export default {
   name: 'app',
   components: {
-    HelloWorld
-  }
+    entryData,
+    doing,
+    done,
+  },
+  data(){
+    return{
+      receiverData:"",
+      doingList:[],
+      doneList:[],
+    }
+  },
+  methods:{
+    handleReceiverData(values){
+      
+      // alert(this.doingList);
+      this.doingList.push(values);
+      // alert(this.doingList);
+    },
+    handleDoneList(values){
+      // alert("收到doing返回的doneList--" + values);
+      this.doneList = values;
+      console.log("收到doing返回的doneList--" + this.doneList);
+    }
+  },
+
 }
 </script>
 
